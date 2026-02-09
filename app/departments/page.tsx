@@ -13,7 +13,7 @@ function Department() {
     const Fetchdepartment = async () => {
       try {
         let token = localStorage.getItem("token")
-        if(!token){
+        if (!token) {
           router.push("/login")
         }
         let responce = await axios.get("https://employee-react.onrender.com/emp/departments", { headers: { Authorization: token } })
@@ -33,9 +33,9 @@ function Department() {
     e.preventDefault()
     try {
       let token = localStorage.getItem("token")
-           if(!token){
-          router.push("/login")
-        }
+      if (!token) {
+        router.push("/login")
+      }
       await axios.post("https://employee-react.onrender.com/emp/add-department", {
         dept_name: deptName,
         description: description
@@ -55,64 +55,64 @@ function Department() {
   }
 
   return (
-    <div>
-      <button
-        onClick={() => setShowForm(!showForm)}
-        style={{
-          backgroundColor: "blue",
-          color: "white",
-          padding: "10px 20px",
-          margin: "10px",
-          border: "2px solid darkblue"
-        }}
-      >
-        {showForm ? "Cancel" : "Add Department"}
-      </button>
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6">Departments</h1>
 
-      {showForm && (
-        <form onSubmit={handleAddDepartment} style={{ margin: "10px", padding: "10px", border: "2px solid blue" }}>
-          <div style={{ marginBottom: "10px" }}>
-            <label>Department Name: </label>
-            <input
-              type="text"
-              name='dept_name'
-              value={deptName}
-              onChange={(e) => setDeptName(e.target.value)}
-              required
-             
-            />
-          </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label>Description: </label>
-            <input
-              type="text"
-              name='description'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              
-            />
-          </div>
-          <button
-            type="submit"
-  
-          >
-            Submit
-          </button>
-        </form>
-      )}
+        <button
+          onClick={() => setShowForm(!showForm)}
+          className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors mb-6"
+        >
+          {showForm ? "Cancel" : "Add Department"}
+        </button>
 
-      <ul style={{ backgroundColor: "green", border: "2px solid" }}>
-        {Departments.map((department: any) => (
-          <div style={{ backgroundColor: "green", border: "2px solid" }} key={department._id} onClick={() => router.push(`/department/${department._id}`)}>
+        {showForm && (
+          <form onSubmit={handleAddDepartment} className="bg-white p-6 rounded-lg shadow-md mb-6">
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Department Name:</label>
+              <input
+                type="text"
+                name='dept_name'
+                value={deptName}
+                onChange={(e) => setDeptName(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Description:</label>
+              <input
+                type="text"
+                name='description'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition-colors"
+            >
+              Submit
+            </button>
+          </form>
+        )}
 
-            <li >{department.department}</li>
-            <li>description:{department.description}</li>
-          </div>
-        ))}
-      </ul>
+        <div className="space-y-4">
+          {Departments.map((department: any) => (
+            <div
+              key={department._id}
+              onClick={() => router.push(`/department/${department._id}`)}
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-green-500"
+            >
+              <h3 className="text-xl font-semibold mb-2">{department.department}</h3>
+              <p className="text-gray-600">Description: {department.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-
   )
 }
 
